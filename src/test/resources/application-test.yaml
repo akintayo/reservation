@@ -1,0 +1,25 @@
+spring:
+  cache:
+    type: NONE
+  datasource:
+    name: ims
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: sa
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+  jpa:
+    database: H2
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+
+      hibernate:
+        generate_statistics: true
+        cache:
+          use_second_level_cache: false
+        search:
+          enabled: false
+    show-sql: true
+  sql:
+    init:
+      mode: always

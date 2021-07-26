@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  hazelcast:
+    image: hazelcast/hazelcast:4.0.3
+    ports:
+      - 5701:5701
+    deploy:
+      resources:
+        limits:
+          memory: 4GB
+        reservations:
+          memory: 2GB
+
+  database:
+    image: postgres:12.2-alpine
+    restart: always
+    environment: 
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: upgrade
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    deploy:
+      resources:
+        limits:
+          memory: 2GB
+        reservations:
+          memory: 1GB
+  
+volumes:
+  database-data:
