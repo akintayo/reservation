@@ -1,9 +1,5 @@
 package com.campsite.reservation;
 
-import com.campsite.reservation.service.ReservationService;
-import com.campsite.reservation.service.ReservationServiceImpl;
-import com.campsite.reservation.util.ReservationHelper;
-import com.campsite.reservation.web.ReservationController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.rest.RepositoryRestMvcAutoConfiguration;
