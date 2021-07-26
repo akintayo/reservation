@@ -107,6 +107,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Reservation modifyReservation(UpdateReservationDTO updateReservationDTO) throws AccessDeniedException, ObjectNotFoundException {
         Reservation reservation = retrieveReservation(updateReservationDTO.getBookingReferenceId());
         validateDateRange(updateReservationDTO.getCheckInDate(), updateReservationDTO.getCheckoutDate());
