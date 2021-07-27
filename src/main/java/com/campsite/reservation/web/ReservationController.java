@@ -33,12 +33,23 @@ public class ReservationController {
     @Resource
     private ReservationService reservationService;
 
+    /**
+     * Returns the list of {@link AvailableDate}s
+     * @param startDate optional arrival date in format yyyy-mm-dd. If not provided, the next day is used
+     * @param endDate optional departure date in format yyyy-mm-dd. If not provided, the end date is 30 days from arrival date
+     * @return the list of {@link AvailableDate}s
+     */
     @GetMapping("/availability")
     @ResponseBody
     public ResponseEntity<List<AvailableDate>> checkReservation(@PathParam("startDate") LocalDate startDate, @PathParam("endDate") LocalDate endDate) {
         return new ResponseEntity<>(reservationService.retrieveAvailableDates(startDate, endDate), OK);
     }
 
+    /**
+     * Perform actual booking provided there is an available spot
+     * @param reservationDTO the payload of the booking to be made
+     * @return {@link ReservationResponseDTO} containing the booking Id (if successful)
+     */
     @PostMapping("/book")
     @ResponseBody
     public ResponseEntity<ReservationResponseDTO> createReservation(@Valid @RequestBody ReservationDTO reservationDTO) {
@@ -46,6 +57,11 @@ public class ReservationController {
         return getReservationResponse(createdReservation);
     }
 
+    /**
+     * Modifies an existing reservation (provided there's availability)
+     * @param updateReservationDTO the payload to be used for update
+     * @return {@link ReservationResponseDTO} containing the booking Id (if successful) amd modifed dates
+     */
     @PutMapping("/modify")
     @ResponseBody
     public ResponseEntity<ReservationResponseDTO> modifyReservation(@Valid @RequestBody UpdateReservationDTO updateReservationDTO) {
@@ -53,6 +69,10 @@ public class ReservationController {
         return getReservationResponse(modifyReservation);
     }
 
+    /**
+     * Cancels an existing reservation
+     * @param reservationId the unique booking reference
+     */
     @DeleteMapping("/cancel/{reservationId}")
     public ResponseEntity<Void> cancelReservation(@PathVariable String reservationId) {
         reservationService.cancelReservation(reservationId);
